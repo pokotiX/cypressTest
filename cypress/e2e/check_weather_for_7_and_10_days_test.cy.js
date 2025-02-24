@@ -4,14 +4,12 @@ describe('Перевірка погоди на Sinoptik.ua', () => {
     beforeEach(() => {
         cy.fixture('weather_data.json').then((data) => {
             weatherData = data;
-            cy.visit('https://ua.sinoptik.ua/');
-            cy.get('input[type=\'search\']').type(weatherData.city);
-            cy.get('body header menu').contains(weatherData.city).click();
+            cy.visitAndSearchCity(weatherData.city);
         });
     });
 
     const checkWeatherForDays = (days) => {
-        cy.origin('https://sinoptik.ua', { args: { days, weatherData } }, ({ days, weatherData }) => {
+        cy.origin('https://sinoptik.ua', {args: {days, weatherData}}, ({days, weatherData}) => {
             if (days === weatherData.days_10) {
                 cy.get('a[href$="/10-dniv"]').click();
             }
@@ -43,7 +41,7 @@ describe('Перевірка погоди на Sinoptik.ua', () => {
     };
 
     it('Відкриття головної сторінки та пошук міста', () => {
-        cy.origin('https://sinoptik.ua', { args: { weatherData } }, ({ weatherData }) => {
+        cy.origin('https://sinoptik.ua', {args: {weatherData}}, ({weatherData}) => {
             cy.url().should('include', '/kyiv');
             cy.request('/pohoda/kyiv').should((response) => {
                 expect(response.status).to.eq(200);

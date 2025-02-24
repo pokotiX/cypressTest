@@ -1,10 +1,14 @@
 {
-  "name": "${PROJECT_NAME}",
+  "name": "cypress-weather-tests",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "End-to-end tests for weather functionality using Cypress",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "npm run cy:run"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "cypress": "^14.0.3"
+  }
 }
